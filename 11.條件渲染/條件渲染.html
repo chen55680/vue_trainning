@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>條件渲染</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <h2>當前的n值是:{{n}}</h2>
+        <button @click="n++">點我n+1</button>
+
+        <!-- <div v-show="n === 1">angular</div>
+        <div v-show="n === 2">react</div>
+        <div v-show="n === 3">vue</div> -->
+
+        <!-- v-else v-else-if 必須緊緊相連不得被打斷 -->
+        <!-- <div v-if="n === 1">angular</div>
+        <div v-else-if="n === 2">react</div>
+        <div v-else-if="n === 3">vue</div>
+        <div v-else>哈哈</div> -->
+
+
+        <!-- 使用v-show做條件渲染display:none -->
+        <!-- <h2 v-show="false">1歡迎來到{{name}}</h2> -->
+
+        <!-- 使用v-if做條件渲染 直接連dom都沒有 -->
+        <!-- <h2 v-if="false">2歡迎來到{{name}}</h2> -->
+
+        <template v-if="n === 1">
+            <div>angular</div>
+            <div>react</div>
+            <div>vue</div>
+        </template>
+
+
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //創建vue實例(一切的開端)
+        new Vue({
+            el:'#root',
+            data:{
+                name:"浩偉家",
+                n:0
+            }
+        })
+    </script>
+</body>
+</html>

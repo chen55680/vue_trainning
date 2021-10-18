@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初識vue</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <!-- Vue未提供別名的按鍵,可以使用按鍵原始的key值去綁定,但注意要轉為kebab-case -->
+        <!-- enter為Vue所取的別名,真正的是Enter(皆可使用) -->
+        <input type="text" placeholder="按下Enter鍵" @keyup.enter="showInfo">
+        <input type="text" placeholder="按下delete鍵" @keyup.delete="showInfo">
+        
+        <!-- 若按鍵名稱(e.key)是大駝峰代表其由兩個單字組成,就必須以全小寫及-連接 -->
+        <input type="text" placeholder="按下大小寫切換鍵" @keyup.caps-lock="showInfo">
+
+        <!-- 若要使用tap鍵必須搭配keydown,因為tap會轉移焦點 -->
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //創建vue實例(一切的開端)
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                name:'charis'
+            },
+            methods:{
+                showInfo(e){
+                    console.log(e.key,e.keyCode)
+                    console.log(e.target.value)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

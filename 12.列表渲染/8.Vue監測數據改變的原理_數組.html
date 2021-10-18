@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基礎模板</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+    <div id="root">
+        <h1>學校信息</h1>
+        <h2>學校名稱: {{school.name}}</h2>
+        <h2>學校地址: {{school.address}}</h2>
+        <!-- leader屬性無法動態添加,因為不得給vue實例後來追加屬性，但只能給data內的某一個物件追加 -->
+        <h2>校長是: {{student.leader}}</h2>  
+        <hr/>
+        <h1>學生信息</h1>
+        <button @click="addSex">添加一個性別屬性,默認值是男</button>
+        <h2>姓名: {{student.name}}</h2>
+        <h2 v-if="student.sex">性別: {{student.sex}}</h2>
+        <h2>愛好</h2>
+         <ul>
+             <li v-for="(h,index) in student.hobby" :key="index">
+                 {{h}}
+             </li>
+         </ul>
+        <h2>年齡: 真實:{{student.age.rAge}}，對外{{student.age.sAge}}</h2>
+         <ul>
+             <li v-for="(f,index) in student.friends" :key="index">
+                 {{f.name}}--{{f.name}}
+             </li>
+         </ul>
+    </div>
+
+    <script type="text/javascript">
+    Vue.config.productionTip = false
+
+    const vm = new Vue({
+        el:'#root',
+        data:{
+            school:{
+                name:'charis school',
+                address:'Taipei',
+            },
+            student:{
+                name:'tom',
+                age:{
+                    rAge:40,
+                    sAge:29,
+                },
+                hobby:['抽菸','喝酒','燙髮'], 
+                //若改動單純數組內的值,Vue無法響應式的改變因為他不賦予getter/setter
+                //要讓vue知道你有修改數組必須使用更改數組的方法ex:push/pop/unshift/sort...(這些方法並非Array原本的方法,是由Vue包裝過的方法)
+                //檢測方式為vm.student.hobby.push === Array.prototype.push  ==> false
+                friends:[
+                    {name:'jerry',age:35},
+                    {name:'tommy',age:26}
+                ]
+            }
+        },
+        methods: {
+            addSex(){
+                Vue.set(this.student,'sex','男')
+                // this.$set(this.student,'sex','男')
+            }
+        },
+    })
+
+    // 因為vue有數據代理它會自動將每一個對象內的屬性都加入get/set
+    // 因此若需要Vue去代理的屬性,必須用以下方式撰寫
+    // Vue.set(vm.student,'sex','男')
+    </script>
+</body>
+</html>

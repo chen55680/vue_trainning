@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本列表</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        
+        <!-- 遍歷數組 -->
+        <h2>人員列表</h2>
+        <ul>
+            <li v-for="(p, index) in persons" :key="p.id">
+                {{p.name}}-{{p.age}}---我是索引值{{index}}
+            </li>
+        </ul>
+
+         <!-- 遍歷對象 -->
+         <h2>汽車信息</h2>
+         <ul>
+            <li v-for="(value, k) in car" :key="k">
+                {{k}}-{{value}}
+            </li>
+        </ul>
+
+
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //創建vue實例(一切的開端)
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                persons:[
+                    {id:'001',name:'張三',age:18},
+                    {id:'002',name:'李四',age:19},
+                    {id:'003',name:'王五',age:20}
+                ],
+                car:{
+                    name:'奧迪',
+                    price:1000,
+                    color:'balck'
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

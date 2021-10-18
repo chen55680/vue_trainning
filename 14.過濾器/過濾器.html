@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>過濾器</title>
+    <script type="text/javascript" src="../js/vue.js"></script> 
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <h2>顯示格式化後的時間</h2>
+        <!-- 計算屬性實現 -->
+        <h3>現在是:{{fmtTime}}</h3>
+        
+        <!-- 方法實現 -->
+        <h3>現在是:{{getfmtTime()}}</h3>
+
+        <!-- 過濾器實現 -->
+        <h3>現在是:{{time | timeFormater}}</h3>
+        <h3>現在是:{{time | timeFormater('YYYY-MM-DD') | mySlice}}</h3> 
+        <!-- time是作為過濾器的第一個參數，若後來加入參數則是第二個參數，順序是time先交由timeFormater再交由mySlice -->
+    </div>
+    
+    <div id="root1">
+        <h2>{{msg | mySlice}}</h2>
+        <h2 :x="msg | mySlice">你好測試</h2>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+        //全局filter配置, 一次配置一個
+        Vue.filter('mySlice',function(value){
+            return value.slice(0,4) 
+        })
+
+
+        //創建vue實例(一切的開端)
+        new Vue({
+            el:'#root',
+            data:{
+                time:Date.now()
+            },
+            computed:{
+                fmtTime(){
+                    return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss') 
+                }
+            },
+            methods: {
+                getfmtTime(){
+                    return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss') 
+                }
+            },
+            //局部過濾器
+            filters:{
+                timeFormater(value, str="YYYY-MM-DD HH:mm:ss"){  //如果沒有傳入str就帶入預設YYYY-MM-DD HH:mm:ss
+                    return dayjs(value).format(str) 
+                }
+            }
+        })
+
+        new Vue({
+            el:'#root1',
+            data:{
+                msg:'test me forever'
+            }
+        })
+
+    </script>
+</body>
+</html>

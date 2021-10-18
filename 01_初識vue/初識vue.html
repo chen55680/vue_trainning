@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初識vue</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <h1>Hello, {{name}}, {{address}}</h1>
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //創建vue實例(一切的開端)
+        new Vue({
+            el:'#root',  //el用於指定當前Vue實例為哪個容器服務,值通常為css選擇器字符串。
+            data:{
+                name:'charis',
+                address:`Taipei`
+            }
+        })
+
+    </script>
+</body>
+</html>

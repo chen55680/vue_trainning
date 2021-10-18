@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表過濾</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+
+        <h2>人員列表</h2>
+        <input type="text" placeholder="請輸入姓名" v-model="keyword">
+        <ul>
+            <li v-for="(p, index) in fillPersons" :key="p.id">
+                {{p.name}}-{{p.age}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //創建vue實例(一切的開端)
+        //#region 
+        /*const vm = new Vue({
+            el:'#root',
+            data:{
+                keyword:'',
+                persons:[
+                    {id:'001',name:'馬冬梅',age:18,sex:'女'},
+                    {id:'002',name:'周東雨',age:19,sex:'女'},
+                    {id:'003',name:'周杰倫',age:20,sex:'男'},
+                    {id:'004',name:'溫兆倫',age:22,sex:'男'}
+                ],
+                fillPersons:[]               
+            },
+            watch:{
+                keyword:{
+                    immediate:true,
+                    handler(val){
+                        this.fillPersons = this.persons.filter((p) => {
+                            return p.name.indexOf(val) !== -1
+                        })
+                    }
+                }
+            }
+        })
+        */
+        //#endregion
+
+        new Vue({
+            el: '#root',
+            data: {
+                keyword: '',
+                persons: [
+                    { id: '001', name: '馬冬梅', age: 18, sex: '女' },
+                    { id: '002', name: '周東雨', age: 19, sex: '女' },
+                    { id: '003', name: '周杰倫', age: 20, sex: '男' },
+                    { id: '004', name: '溫兆倫', age: 22, sex: '男' }
+                ],
+
+            },
+            computed: {
+                fillPersons() {
+                    return this.persons.filter((p) => {
+                        return p.name.indexOf(this.keyword) !== -1
+                    })
+                }
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

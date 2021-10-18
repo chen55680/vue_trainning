@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初識vue</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <!-- v-pre 可以讓vue跳過其編譯過程，根據需求可以加速編譯 -->
+        <h2 v-pre>vue其實很簡單</h2>
+        <h2 v-pre>當前的n值是:{{n}}</h2>
+        <button v-pre @click="n++">n+1</button>
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //創建vue實例(一切的開端)
+        new Vue({
+            el:'#root',
+            data:{
+                n:1
+            }
+        })
+        
+    </script>
+</body>
+</html>

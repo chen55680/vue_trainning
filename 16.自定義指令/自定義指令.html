@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定義指令</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 需求1.定義一個v-big指令，和v-text類似，但會把綁定的數值放大10倍 -->
+    <!-- 需求2.定義一個v-fbind指令，和v-bind類似，但可以讓其所綁定的input元素默認獲取焦點 -->
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <h2>當前的n值是: <span v-text="n"></span></h2>
+        <h2>放大10倍後的n值是: <span v-big-number="n"></span></h2>
+        <button @click="n++">點我n+1</button>
+        <hr />
+        <input type="text" v-fbind:value="n">
+    </div>
+
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+        //定義全局指令
+        Vue.directive('fbind2', {
+            //指令與元素成功綁定(一上來)
+            bind(element, binding) {
+                console.log('bind', this)
+                element.value = binding.value
+            },
+            //指令所在元素被插入頁面時調用
+            inserted(element, binding) {
+                console.log('inserted')
+                element.focus();
+            },
+            //指令所在模板被重新解析時
+            update(element, binding) {
+                console.log('update')
+                element.focus();
+            },
+        })
+        // Vue.directive('big', function (element, binding) { //一個是用到的元素一個是數值
+        //     element.innerText = binding.value * 10
+
+        //     console.log(element, binding.value)
+        // })
+
+        //創建vue實例(一切的開端)
+        new Vue({
+            el: '#root',
+            data: {
+                n: 1
+            },
+            directives: { //指定的this都指向windows，此處為局部過濾器
+                //下方為簡單版寫法 
+                //big函數何時會被調用? 1.指令與元素成功綁定時。2指令所在的模板被重新解析時
+                'big-number'(element, binding) { //一個是用到的元素一個是數值
+                    element.innerText = binding.value * 10
+
+                    console.log(element, binding.value)
+                },
+                //初使化無法focus，因為頁面input尚未出現(Vue仍在編譯)就給他focus
+                // fbind(element, binding){
+                //     element.value = binding.value
+                //     element.focus();
+                // }
+                fbind: { //以下三種回調方式是固定的
+                    //指令與元素成功綁定(一上來)
+                    bind(element, binding) {
+                        console.log('bind', this)
+                        element.value = binding.value
+                    },
+                    //指令所在元素被插入頁面時調用
+                    inserted(element, binding) {
+                        console.log('inserted')
+                        element.focus();
+                    },
+                    //指令所在模板被重新解析時
+                    update(element, binding) {
+                        console.log('update')
+                        element.focus();
+                    },
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
