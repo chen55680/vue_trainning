@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>引出生命週期</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!--
+        常用的生命週期鉤子:
+            1.mounted: 發送ajax請求、啟動定時器、綁定自定義事件、訂約消息等[初始化操作]
+            2.beforeDestroy: 清除定時器、解綁自定義事件、取消訂閱消息等[收尾工作]
+        
+        關於銷毀Vue實例
+            1.銷毀後借助vue開發者工具看不到任何信息
+            2.消毀後自定義事件會失效，但原生DON事件依然有效(ex:click)
+            3.一般不會在beforeDestroy操作數據，因為即便操作數據，也不會觸發更新流程
+    -->
+
+    <div id="root">
+        <h2 :style="{opacity}">welcome</h2>
+        <button @click="stop">點我停止變換</button>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                opacity: 1
+            },
+            methods: {
+                stop(){
+                    this.$destroy()
+                }
+            },
+            //Vue完成模板的解析並把初始的真實DOM元素放入頁面後(掛載完畢)調用mounted
+            mounted() {
+                console.log(this)
+                this.timer = setInterval(() => {
+                    this.opacity -= 0.01
+                    if (this.opacity <= 0) this.opacity = 1
+                }, 16)
+            },
+            //只要開始走銷毀流程就毀走進此配置中
+            beforeDestroy() {
+                console.log('vm即將死去')
+                clearInterval(this.timer)
+            },
+        })
+
+    </script>
+</body>
+
+</html>

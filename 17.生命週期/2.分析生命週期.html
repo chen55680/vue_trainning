@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分析生命週期</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <h2>當前的n值是: {{n}}</h2>
+        <button @click="add">點我n++</button>
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //創建vue實例(一切的開端)
+        new Vue({
+            el:'#root',
+            data:{
+                n:1
+            },
+            methods: {
+                add(){
+                    this.n++
+                }
+            },
+            //初始化:生命週期、事件，但數據尚未進行代理(沒有data)
+            beforeCreate() {
+                console.log('beforeCreate')
+            },
+            //數據監測，此時已經可以進行數據代理(有data)
+            created() {
+                console.log('created')
+            },
+            //已存在虛擬Dom但尚未有真實Dom，所以對Dom的操作最終都不作效
+            beforeMount() {
+                console.log('beforeMount')
+                console.log(this)
+            },
+            //將虛擬Dom放入頁面完畢進入此方法,對DOM的操作有效(但盡量避免)，至此初始化過程結束
+            //一般在此進行:開啟定時器、發送網絡請求、訂閱消息、綁定自定義事件
+            mounted() {
+                console.log('mounted')
+            },
+        })
+
+    </script>
+</body>
+</html>
