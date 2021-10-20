@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初識vue</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <h1>{{msg}}</h1>
+        <school></school>
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+        //組件簡寫形式，若組件使用到會自己呼叫Vue.extend
+        const school = {
+            name:'AtSchool', //可以用name配置項指定組件在開發者工具中呈現的名字
+            template:`
+                <div>
+                    <h2>學校名稱:{{name}}</h2>
+                    <h2>學校地址:{{address}}</h2>
+                </div>
+            `,
+            data(){
+                return{
+                    name:'中山',
+                    address:'高雄市'
+                }
+            }
+        }
+        
+
+        new Vue({
+            el:'#root',
+            data:{
+                msg:'歡迎學習Vue!'
+            },
+            components:{
+                school
+            }
+        })
+        
+
+    </script>
+</body>
+</html>
