@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初識vue</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+        //定義student組件
+        const student = Vue.extend({
+            name:'student',
+            template:`
+                <div>
+                    <h2>學生姓名:{{name}}</h2>
+                    <h2>學生年齡:{{age}}</h2>
+                </div>
+            `,
+            data(){
+                return{
+                    name:'陳浩偉',
+                    age:18
+                }
+            }
+        })
+
+        //定義school組件
+        const school = Vue.extend({
+            name:'school', //可以用name配置項指定組件在開發者工具中呈現的名字
+            template:`
+                <div>
+                    <h2>學校名稱:{{name}}</h2>
+                    <h2>學校地址:{{address}}</h2>
+                    <student></student>
+                </div>
+            `,
+            data(){
+                return{
+                    name:'中山',
+                    address:'高雄市'
+                }
+            },
+            components:{
+                student  //student組件要放此組件之前，否則讀不到
+            }
+        })
+        
+        //定義hello組件
+        const hello = Vue.extend({
+            template:`
+                <h1>{{msg}}</h1>
+            `,
+            data(){
+                return {
+                    msg:'welcome!!'
+                }
+            }
+        })
+        
+        //定義app組件(領導眾多的組件) -- 此為標準化開發
+        const app = Vue.extend({
+            template:`
+                <div>
+                    <hello></hello>
+                    <school></school>
+                </div>
+            `,
+            components:{
+                school,
+                hello
+            }
+        })
+
+        //創建vm
+        new Vue({
+            template:`<app></app>`,
+            el:'#root',
+            //註冊組建(局部)
+            components:{app}
+            
+        })
+
+        
+
+    </script>
+</body>
+</html>

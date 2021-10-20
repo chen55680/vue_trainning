@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初識vue</title>
+    <script type="text/javascript" src="../js/vue.js"></script>  
+</head>
+<body>
+<!-- 
+    關於VueComponent:
+        1.school組件本質是一個名為VueComponent的構造函數，且不是程序員定義的，是Vue.extend生成的
+        2.我們只需要寫<school></school>，Vue解析時就會幫我們創建school組件的實例對象
+          即Vue幫我們執行的: new VueComponent(options)
+        
+        3.特別注意: 每次調用Vue.extend，返回的都是一個全新的VueComponent!!!
+        4.關於this組件的指向
+            (1).組件配置中: this均是指VueComponent實例對象
+            (2).new Vue(options)配置中: this指的是Vue實例對象
+            
+        5.VueComponent實例對象，簡稱vc
+ -->
+
+    <!-- 準備好一個容器 -->
+    <div id="root">
+        <school></school>
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示
+
+
+        //定義school組件
+        const school = Vue.extend({
+            name:'school', //可以用name配置項指定組件在開發者工具中呈現的名字
+            template:`
+                <div>
+                    <h2>學校名稱:{{name}}</h2>
+                    <h2>學校地址:{{address}}</h2>
+                    <button @click="showName">點我顯示名稱</button>
+                </div>
+            `,
+            data(){
+                return{
+                    name:'中山',
+                    address:'高雄市'
+                }
+            },
+            methods: {
+                showName(){
+                    console.log(this)
+                }
+            },
+        })
+        console.log('@',school)
+        //創建vm
+        new Vue({
+            el:'#root',
+            components:{school}
+        })
+
+    </script>
+</body>
+</html>
